@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ENERGYNETAI - O-RAN Tabanlı Akıllı Enerji ve QoS Yönetimi</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-green: #00C896;
+            --dark-green: #00946F;
+            --deep-blue: #0A1929;
+            --slate-blue: #1E293B;
+            --light-gray: #F1F5F9;
+            --warm-gray: #64748B;
+            --accent-amber: #F59E0B;
+            --text-primary: #0F172A;
+            --text-secondary: #475569;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'DM Sans', sans-serif;
+            color: var(--text-primary);
+            background: linear-gradient(180deg, #FFFFFF 0%, var(--light-gray) 100%);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+        
+        /* Logo/Brand Section */
+        .brand-header {
+            background: white;
+            padding: 20px 0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .brand-logo {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary-green), var(--dark-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 0.05em;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--deep-blue) 0%, var(--slate-blue) 100%);
+            color: white;
+            padding: 100px 0 80px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: -10%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(0, 200, 150, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: pulse 8s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 24px;
+            letter-spacing: -0.02em;
+        }
+        
+        .project-name {
+            display: inline-block;
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--primary-green);
+            font-size: 1.1em;
+            letter-spacing: 0.05em;
+            background: linear-gradient(135deg, var(--primary-green), var(--accent-amber));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 8px;
+            display: block;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: rgba(255, 255, 255, 0.9);
+            max-width: 800px;
+            margin-bottom: 40px;
+            line-height: 1.7;
+        }
+        
+        .hero-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 32px;
+            margin-top: 60px;
+        }
+        
+        .stat-card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 12px;
+            padding: 24px;
+            transition: all 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            background: rgba(255, 255, 255, 0.12);
+            transform: translateY(-4px);
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-green);
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+        
+        .stat-label {
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        /* Section Styles */
+        section {
+            padding: 80px 0;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .section-tag {
+            display: inline-block;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.875rem;
+            color: var(--primary-green);
+            background: rgba(0, 200, 150, 0.1);
+            padding: 6px 16px;
+            border-radius: 20px;
+            margin-bottom: 16px;
+            font-weight: 600;
+        }
+        
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            letter-spacing: -0.02em;
+        }
+        
+        .section-description {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+        
+        /* Problem & Solution Cards */
+        .problem-solution {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-top: 60px;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+            transition: all 0.3s ease;
+        }
+        
+        .card:hover {
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+            transform: translateY(-4px);
+        }
+        
+        .card-icon {
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, var(--primary-green), var(--dark-green));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.75rem;
+            margin-bottom: 24px;
+        }
+        
+        .card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 16px;
+            color: var(--text-primary);
+        }
+        
+        .card p {
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+        
+        /* Architecture Section */
+        .architecture-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+            margin-top: 40px;
+        }
+        
+        .arch-component {
+            background: white;
+            border-left: 4px solid var(--primary-green);
+            border-radius: 8px;
+            padding: 28px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+        }
+        
+        .arch-component h4 {
+            font-size: 1.125rem;
+            margin-bottom: 12px;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .arch-component code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            color: var(--primary-green);
+            background: rgba(0, 200, 150, 0.08);
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+        
+        .arch-component p {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+        
+        /* Innovation Points */
+        .innovation-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 32px;
+            margin-top: 50px;
+        }
+        
+        .innovation-card {
+            background: linear-gradient(135deg, #FFFFFF 0%, #F8FAFC 100%);
+            border: 1px solid #E2E8F0;
+            border-radius: 12px;
+            padding: 32px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .innovation-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, var(--primary-green), var(--dark-green));
+        }
+        
+        .innovation-number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: rgba(0, 200, 150, 0.15);
+            line-height: 1;
+            margin-bottom: 12px;
+        }
+        
+        .innovation-card h4 {
+            font-size: 1.25rem;
+            margin-bottom: 12px;
+            color: var(--text-primary);
+        }
+        
+        .innovation-card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+        
+        /* Sustainability Focus */
+        .sustainability-banner {
+            background: linear-gradient(135deg, var(--primary-green) 0%, var(--dark-green) 100%);
+            color: white;
+            padding: 60px 0;
+            margin: 80px 0;
+            border-radius: 24px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .sustainability-banner::after {
+            content: '';
+            position: absolute;
+            bottom: -50px;
+            right: -50px;
+            width: 300px;
+            height: 300px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+        }
+        
+        .sustainability-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+        }
+        
+        .sustainability-content h2 {
+            font-size: 2.25rem;
+            margin-bottom: 20px;
+        }
+        
+        .sustainability-content p {
+            font-size: 1.125rem;
+            max-width: 800px;
+            margin: 0 auto 40px;
+            opacity: 0.95;
+            line-height: 1.8;
+        }
+        
+        .sustainability-metrics {
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+        
+        .metric {
+            text-align: center;
+        }
+        
+        .metric-value {
+            font-size: 3rem;
+            font-weight: 700;
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+        
+        .metric-label {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+        
+        /* Technical Comparison */
+        .comparison-table {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+            margin-top: 40px;
+        }
+        
+        .comparison-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .comparison-table th {
+            background: var(--slate-blue);
+            color: white;
+            padding: 20px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+        
+        .comparison-table td {
+            padding: 20px;
+            border-bottom: 1px solid #E2E8F0;
+            font-size: 0.95rem;
+        }
+        
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .comparison-table tr:hover {
+            background: #F8FAFC;
+        }
+        
+        .highlight {
+            color: var(--primary-green);
+            font-weight: 600;
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--deep-blue);
+            color: white;
+            padding: 60px 0 30px;
+            margin-top: 100px;
+        }
+        
+        .footer-content {
+            text-align: center;
+        }
+        
+        .footer-title {
+            font-size: 1.5rem;
+            margin-bottom: 16px;
+        }
+        
+        .footer-text {
+            color: rgba(255, 255, 255, 0.8);
+            max-width: 600px;
+            margin: 0 auto 40px;
+        }
+        
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 30px;
+            margin-top: 40px;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .problem-solution,
+            .architecture-grid,
+            .innovation-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .sustainability-metrics {
+                gap: 40px;
+            }
+            
+            .comparison-table {
+                overflow-x: auto;
+            }
+        }
+        
+        /* Smooth Scroll Animation */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .animate-in {
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+    </style>
+</head>
+<body>
+    <!-- Brand Header -->
+    <header class="brand-header">
+        <div class="container">
+            <div class="brand-logo">ENERGYNETAI</div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container hero-content">
+            <span class="project-name">ENERGYNETAI</span>
+            <h1>O-RAN Tabanlı Akıllı Enerji ve QoS Yönetimi</h1>
+            <p class="hero-subtitle">
+                <strong>ENERGYNETAI</strong>, hibrit zekâ mimarisi ile 5G şebekelerinde enerji verimliliği ve hizmet kalitesini aynı anda optimize eden, 
+                kriz anlarında otonom tepki verebilen yeni nesil telekom altyapı çözümüdür.
+            </p>
+            
+            <div class="hero-stats">
+                <div class="stat-card">
+                    <div class="stat-number">%15-20</div>
+                    <div class="stat-label">Enerji Tasarrufu</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">10ms-1s</div>
+                    <div class="stat-label">Gerçek Zamanlı Karar</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">%20</div>
+                    <div class="stat-label">Karbon Emisyon Azaltımı</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">Kriz Anı Dayanıklılık</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Problem & Solution -->
+    <section>
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">SORUN & ÇÖZÜM</span>
+                <h2 class="section-title">Telekom Sektörünün Enerji Krizi</h2>
+                <p class="section-description">
+                    Mobil ağ operatörlerinin toplam enerji tüketiminin %80'inden fazlası Radyo Erişim Ağları (RAN) 
+                    tarafından gerçekleştirilmektedir. Bu durum operasyonel maliyetleri artırırken, karbon hedeflerini tehdit etmektedir.
+                </p>
+            </div>
+            
+            <div class="problem-solution">
+                <div class="card">
+                    <div class="card-icon">⚡</div>
+                    <h3>Geleneksel Yaklaşımın Sınırları</h3>
+                    <p>
+                        Monolitik RAN mimarileri, dinamik trafik değişimlerine gerçek zamanlı uyum sağlayamaz. 
+                        Statik enerji tasarrufu yöntemleri ya kullanıcı deneyimini bozar ya da yetersiz kalır. 
+                        Kriz anlarında şebeke esnekliği olmadan kalır.
+                    </p>
+                </div>
+                
+                <div class="card">
+                    <div class="card-icon">🎯</div>
+                    <h3>Akıllı ve Dayanıklı Şebeke</h3>
+                    <p>
+                        O-RAN mimarisinin sunduğu ayrıştırılmış yapı, RIC (RAN Intelligent Controller) katmanları 
+                        ve yapay zekâ entegrasyonu ile şebeke programlanabilir hale gelir. Enerji verimliliği, 
+                        hizmet kalitesi ve afet dayanıklılığı tek bir sistemde birleşir.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sustainability Banner -->
+    <div class="sustainability-banner">
+        <div class="container sustainability-content">
+            <h2>Sürdürülebilirlik Odaklı Tasarım</h2>
+            <p>
+                Sistem sadece RAN tüketimini azaltmakla kalmaz, yapay zekâ modellerinin kendi enerji maliyetini de hesaba katarak 
+                <strong>Net Enerji Kazancı</strong> üzerinden gerçek sürdürülebilirlik değeri sağlar. 
+                Her kilowatt-saat tasarruf otomatik olarak karbon ayak izi azaltımına dönüştürülür ve ESG hedeflerine katkı sunar.
+            </p>
+            
+            <div class="sustainability-metrics">
+                <div class="metric">
+                    <div class="metric-value">Net +</div>
+                    <div class="metric-label">Enerji Kazancı Garantisi</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">CO₂</div>
+                    <div class="metric-label">Otomatik Karbon Raporlama</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">ESG</div>
+                    <div class="metric-label">Sürdürülebilirlik Uyumu</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Architecture -->
+    <section>
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">MİMARİ</span>
+                <h2 class="section-title">Hibrit Zekâ Mimarisi</h2>
+                <p class="section-description">
+                    İki katmanlı RIC (RAN Intelligent Controller) yapısı, stratejik planlama ile gerçek zamanlı 
+                    operasyonel kararları birleştirerek şebekeye hem akıl hem refleks kazandırır.
+                </p>
+            </div>
+            
+            <div class="architecture-grid">
+                <div class="arch-component">
+                    <h4><code>Non-RT RIC</code> Stratejik Katman</h4>
+                    <p>
+                        Uzun vadeli (>1s) trafik tahminleri, Pekiştirmeli Öğrenme (RL) ile politika üretimi. 
+                        Geçmiş PM/CM verilerinden öğrenerek gelecek saatlerin enerji stratejisini belirler.
+                    </p>
+                </div>
+                
+                <div class="arch-component">
+                    <h4><code>Near-RT RIC</code> Operasyonel Katman</h4>
+                    <p>
+                        Milisaniyeler içinde (10ms-1s) karar alan xApp'ler, PRB kullanımı, SINR ve Drop Rate 
+                        gibi anlık KPI'ları izleyerek QoS Guardrail mekanizmasıyla güvenlik sağlar.
+                    </p>
+                </div>
+                
+                <div class="arch-component">
+                    <h4><code>E2 Arayüzü</code> Gerçek Zamanlı Veri</h4>
+                    <p>
+                        O-CU ve O-DU düğümlerinden gelen telemetri verileri, xApp'lere şebekenin nabzını 
+                        milisaniye hassasiyetiyle iletir. What-if analizleri için kritik veri kaynağıdır.
+                    </p>
+                </div>
+                
+                <div class="arch-component">
+                    <h4><code>A1 Arayüzü</code> Politika Rehberliği</h4>
+                    <p>
+                        Non-RT RIC'den Near-RT RIC'e stratejik politika aktarımı. Uzun vadeli öğrenme ile 
+                        anlık optimizasyon arasındaki köprüyü kurar.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Key Innovations -->
+    <section style="background: var(--light-gray);">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">YENİLİKLER</span>
+                <h2 class="section-title">Projenin Ayırt Edici Katkıları</h2>
+                <p class="section-description">
+                    Mevcut O-RAN enerji yönetimi çözümlerinden farklı olarak, sistemimiz güvenlik, dayanıklılık 
+                    ve sürdürülebilirliği tek bir bütünsel mimari içinde birleştirir.
+                </p>
+            </div>
+            
+            <div class="innovation-grid">
+                <div class="innovation-card">
+                    <div class="innovation-number">01</div>
+                    <h4>QoS Guardrail Mekanizması</h4>
+                    <p>
+                        Enerji tasarrufu kararları uygulanmadan önce gerçek zamanlı PRB doluluğu, SINR ve Drop Rate 
+                        kontrolleriyle denetlenir. AI'nın kör noktaları milisaniye bazında kapatılır, şebeke 
+                        bütünlüğü her zaman korunur.
+                    </p>
+                </div>
+                
+                <div class="innovation-card">
+                    <div class="innovation-number">02</div>
+                    <h4>Kriz-Farkındalıklı Otonom Yönetim</h4>
+                    <p>
+                        Afet veya anomali anlarını otonom algılayan sistem, saniyeler içinde "Kriz Modu"na geçerek 
+                        tüm enerji tasarrufunu iptal eder. Acil çağrı kapasitesi maksimize edilir, kapsama boşlukları 
+                        doldurulur, hayat kurtaran iletişim önceliklenir.
+                    </p>
+                </div>
+                
+                <div class="innovation-card">
+                    <div class="innovation-number">03</div>
+                    <h4>Neighbor Consistency Guard</h4>
+                    <p>
+                        SON prensipleriyle entegre çalışan sistem, bir hücre uyku moduna geçmeden önce komşu hücrelerin 
+                        listesinde otomatik olarak "yasaklı" işaretler. "Ghost Cell" problemi ve handover başarısızlıkları 
+                        otonom olarak önlenir.
+                    </p>
+                </div>
+                
+                <div class="innovation-card">
+                    <div class="innovation-number">04</div>
+                    <h4>Bütünsel Sürdürülebilirlik Analizi</h4>
+                    <p>
+                        AI modellerinin eğitim ve çıkarım maliyeti hesaba katılarak "Net Enerji Kazancı" formülasyonu 
+                        yapılır. Gerçek karbon ayak izi azaltımı otomatik raporlanır, ESG hedeflerine somut katkı sağlanır.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technical Comparison -->
+    <section>
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">KARŞILAŞTIRMA</span>
+                <h2 class="section-title">Mevcut Çözümlerden Teknik Farklar</h2>
+            </div>
+            
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Özellik</th>
+                            <th>Geleneksel Enerji Yönetimi</th>
+                            <th>Bizim Çözümümüz</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>QoS Yaklaşımı</strong></td>
+                            <td>Statik eşikler, politika bazlı karar</td>
+                            <td><span class="highlight">Dinamik Guardrail, milisaniye bazında gerçek zamanlı kontrol</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Kriz Yönetimi</strong></td>
+                            <td>Yok veya reaktif, manuel müdahale</td>
+                            <td><span class="highlight">Otonom kriz algılama, saniyeler içinde mod değişimi</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Komşu Hücre Yönetimi</strong></td>
+                            <td>Manuel/Reaktif güncelleme</td>
+                            <td><span class="highlight">Proaktif Consistency Guard, Ghost Cell önleme</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Sürdürülebilirlik Ölçümü</strong></td>
+                            <td>Tek yönlü RAN tasarrufu</td>
+                            <td><span class="highlight">Net enerji kazancı, AI maliyet dahil, karbon raporlama</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Karar Katmanı</strong></td>
+                            <td>Tek katman (merkezi veya yerel)</td>
+                            <td><span class="highlight">Hibrit iki katman (rApp + xApp), strateji + refleks</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container footer-content">
+            <h3 class="footer-title">Geleceğin Şebekeleri İçin Bugünden Hazır</h3>
+            <p class="footer-text">
+                O-RAN Alliance standartlarına tam uyumlu, 6G ve AI-native ağ mimarilerine doğrudan entegre edilebilir 
+                esneklikte bir çözüm. Akıllı, yeşil ve dayanıklı dijital geleceğin altyapısı.
+            </p>
+            
+            <div class="footer-bottom">
+                <strong>ENERGYNETAI</strong> © 2026 - O-RAN Akıllı Enerji ve QoS Yönetimi Projesi
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Simple scroll animation
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.card, .arch-component, .innovation-card').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
