@@ -938,6 +938,147 @@
   ::-webkit-scrollbar { width: 4px; }
   ::-webkit-scrollbar-track { background: var(--bg); }
   ::-webkit-scrollbar-thumb { background: var(--border); }
+
+  /* ══════════════════════════════════════════
+     HAMBURGER BUTTON
+     ══════════════════════════════════════════ */
+  .nav-hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    background: none;
+    border: 1px solid var(--border);
+    padding: 8px 10px;
+    cursor: pointer;
+    z-index: 200;
+  }
+  .nav-hamburger span {
+    display: block;
+    width: 20px; height: 1px;
+    background: var(--green);
+    transition: transform 0.3s, opacity 0.3s;
+  }
+  .nav-hamburger.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+  .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+  .nav-hamburger.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+  /* ══════════════════════════════════════════
+     TABLET  (max 1024px)
+     ══════════════════════════════════════════ */
+  @media (max-width: 1024px) {
+    nav { padding: 18px 28px; }
+
+    .hero { padding: 100px 28px 60px; }
+    .hero-content { grid-template-columns: 1fr; gap: 48px; }
+    .hero-glow { width: 400px; height: 400px; }
+
+    .stats-strip { padding: 36px 28px; grid-template-columns: repeat(2, 1fr); }
+    .stat-item { padding: 20px 20px; border-right: none; border-bottom: 1px solid var(--border); }
+    .stat-item:nth-child(odd)  { border-right: 1px solid var(--border); }
+    .stat-item:nth-child(3),
+    .stat-item:nth-child(4)    { border-bottom: none; }
+
+    .section-inner { padding: 80px 28px; }
+
+    .arch-grid { grid-template-columns: repeat(2, 1fr); }
+
+    .formula-wrap { padding: 80px 28px; grid-template-columns: 1fr; gap: 48px; }
+
+    .crisis-inner { padding: 80px 28px; grid-template-columns: 1fr; gap: 48px; }
+
+    .market-inner { padding: 80px 28px; }
+    .market-grid  { grid-template-columns: 1fr; }
+    .revenue-strip { padding: 40px 28px 0; grid-template-columns: 1fr; }
+
+    .esg-banner { padding: 48px 28px; flex-direction: column; align-items: flex-start; gap: 32px; }
+    .esg-items  { gap: 36px; }
+
+    .team-inner { padding: 80px 28px; }
+    .team-grid  { grid-template-columns: 1fr; }
+
+    footer { padding: 32px 28px; flex-direction: column; gap: 14px; text-align: center; }
+  }
+
+  /* ══════════════════════════════════════════
+     MOBILE  (max 640px)
+     ══════════════════════════════════════════ */
+  @media (max-width: 640px) {
+    /* — Nav — */
+    nav { padding: 16px 20px; }
+    .nav-badge-desktop { display: none; }
+    .nav-hamburger { display: flex; }
+
+    .nav-links {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(5,10,14,0.97);
+      backdrop-filter: blur(20px);
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 32px;
+      z-index: 150;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+    .nav-links.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+    .nav-links a {
+      font-size: 1.1rem;
+      letter-spacing: 0.14em;
+    }
+
+    /* — Hero — */
+    .hero { padding: 90px 20px 48px; }
+    .hero-content { gap: 36px; }
+    .hero h1 { font-size: 2.2rem; }
+    .hero-desc { font-size: 0.78rem; }
+    .hero-cta { flex-direction: column; }
+    .btn-primary, .btn-outline { justify-content: center; }
+    .hero-glow { width: 280px; height: 280px; }
+
+    /* — Dashboard — */
+    .kpi-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+    .kpi-value { font-size: 1.2rem; }
+
+    /* — Stats — */
+    .stats-strip { grid-template-columns: repeat(2, 1fr); padding: 28px 20px; }
+    .stat-num { font-size: 1.8rem; }
+
+    /* — Arch — */
+    .section-inner { padding: 60px 20px; }
+    .arch-grid { grid-template-columns: 1fr; }
+    .section-title { font-size: 1.6rem; margin-bottom: 36px; }
+
+    /* — Formula — */
+    .formula-wrap { padding: 60px 20px; }
+    .formula-eq { font-size: 0.7rem; }
+    .w-row { grid-template-columns: 90px 1fr 40px; gap: 10px; }
+
+    /* — Crisis — */
+    .crisis-inner { padding: 60px 20px; }
+
+    /* — Market — */
+    .market-inner { padding: 60px 20px; }
+    .revenue-strip { padding: 28px 20px 0; }
+
+    /* — ESG — */
+    .esg-banner { padding: 40px 20px; }
+    .esg-items { gap: 24px; flex-wrap: wrap; }
+    .esg-num { font-size: 1.4rem; }
+    .esg-formula { font-size: 0.68rem; padding: 12px 16px; }
+
+    /* — Team — */
+    .team-inner { padding: 60px 20px; }
+
+    /* — Footer — */
+    footer { padding: 28px 20px; }
+    .footer-copy { display: none; }
+  }
 </style>
 </head>
 <body>
@@ -945,13 +1086,16 @@
 <!-- NAV -->
 <nav>
   <a href="#" class="nav-logo">ENERGYNET<span>AI</span></a>
-  <ul class="nav-links">
-    <li><a href="#mimari">Mimari</a></li>
-    <li><a href="#kriz">Kriz Modu</a></li>
-    <li><a href="#pazar">Pazar</a></li>
-    <li><a href="#ekip">Ekip</a></li>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#mimari" onclick="closeNav()">Mimari</a></li>
+    <li><a href="#kriz" onclick="closeNav()">Kriz Modu</a></li>
+    <li><a href="#pazar" onclick="closeNav()">Pazar</a></li>
+    <li><a href="#ekip" onclick="closeNav()">Ekip</a></li>
   </ul>
-  <span class="nav-badge">Turkcell × AI</span>
+  <span class="nav-badge nav-badge-desktop">Turkcell × AI</span>
+  <button class="nav-hamburger" id="navHamburger" aria-label="Menü">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
 
 <!-- HERO -->
@@ -1344,6 +1488,20 @@
 </footer>
 
 <script>
+  // ── Hamburger menu ──
+  const hamburger = document.getElementById('navHamburger');
+  const navLinks  = document.getElementById('navLinks');
+
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    navLinks.classList.toggle('open');
+  });
+
+  function closeNav() {
+    hamburger.classList.remove('open');
+    navLinks.classList.remove('open');
+  }
+
   // Intersection Observer for fade-up
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(e => {
