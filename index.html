@@ -1013,40 +1013,53 @@
     .nav-badge-desktop { display: none; }
     .nav-hamburger { display: flex; }
 
-    /* Menü kapalıyken tamamen gizle */
+    /* Drawer — sağdan kayar */
     .nav-links {
-      display: none;
+      display: flex;
       position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      width: 100vw; height: 100vh;
-      background: #050a0e;
+      top: 0; right: 0;
+      width: 72vw; max-width: 280px;
+      height: 100vh;
+      background: #071218;
+      border-left: 1px solid var(--border);
       flex-direction: column;
-      align-items: center;
+      align-items: flex-start;
       justify-content: center;
-      gap: 36px;
+      gap: 8px;
+      padding: 40px 32px;
       z-index: 250;
       list-style: none;
+      transform: translateX(100%);
+      transition: transform 0.32s cubic-bezier(0.4, 0, 0.2, 1);
     }
-
-    /* Menü açıkken göster */
     .nav-links.open {
-      display: flex;
+      transform: translateX(0);
     }
-
     .nav-links a {
-      font-size: 1.3rem;
+      font-size: 1rem;
       letter-spacing: 0.14em;
       color: var(--text-dim);
       text-decoration: none;
       text-transform: uppercase;
+      padding: 14px 0;
+      width: 100%;
+      border-bottom: 1px solid var(--border);
       transition: color 0.2s;
     }
+    .nav-links li:last-child a { border-bottom: none; }
     .nav-links a:hover { color: var(--green); }
 
-    /* Hamburger açıkken nav üzerinde kalması için */
-    .nav-hamburger {
-      z-index: 300;
+    /* Karartma overlay */
+    .nav-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.55);
+      z-index: 240;
     }
+    .nav-overlay.open { display: block; }
+
+    .nav-hamburger { z-index: 300; }
 
     /* — Hero — */
     .hero { padding: 90px 20px 48px; }
@@ -1110,6 +1123,7 @@
     <span></span><span></span><span></span>
   </button>
 </nav>
+<div class="nav-overlay" id="navOverlay"></div>
 
 <!-- HERO -->
 <section class="hero">
@@ -1460,22 +1474,25 @@
 </footer>
 
 <script>
-  // ── Hamburger menu ──
+  // ── Hamburger / Drawer menu ──
   const hamburger = document.getElementById('navHamburger');
   const navLinks  = document.getElementById('navLinks');
-
-  // nav-links'i body'e taşı — nav'ın stacking context'inden kurtar
-  document.body.appendChild(navLinks);
+  const overlay   = document.getElementById('navOverlay');
 
   hamburger.addEventListener('click', () => {
     const isOpen = hamburger.classList.toggle('open');
     navLinks.classList.toggle('open', isOpen);
+    overlay.classList.toggle('open', isOpen);
     document.body.style.overflow = isOpen ? 'hidden' : '';
   });
+
+  // Overlay'e tıklayınca kapat
+  overlay.addEventListener('click', closeNav);
 
   function closeNav() {
     hamburger.classList.remove('open');
     navLinks.classList.remove('open');
+    overlay.classList.remove('open');
     document.body.style.overflow = '';
   }
 
