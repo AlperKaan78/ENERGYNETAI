@@ -951,7 +951,8 @@
     border: 1px solid var(--border);
     padding: 8px 10px;
     cursor: pointer;
-    z-index: 200;
+    z-index: 300;
+    position: relative;
   }
   .nav-hamburger span {
     display: block;
@@ -1005,31 +1006,46 @@
      ══════════════════════════════════════════ */
   @media (max-width: 640px) {
     /* — Nav — */
-    nav { padding: 16px 20px; }
+    nav {
+      padding: 16px 20px;
+      z-index: 200;
+    }
     .nav-badge-desktop { display: none; }
     .nav-hamburger { display: flex; }
 
+    /* Menü kapalıyken tamamen gizle */
     .nav-links {
+      display: none;
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(5,10,14,0.97);
-      backdrop-filter: blur(20px);
+      width: 100vw; height: 100vh;
+      background: #050a0e;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 32px;
-      z-index: 150;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.3s;
+      gap: 36px;
+      z-index: 250;
+      list-style: none;
     }
+
+    /* Menü açıkken göster */
     .nav-links.open {
-      opacity: 1;
-      pointer-events: all;
+      display: flex;
     }
+
     .nav-links a {
-      font-size: 1.1rem;
+      font-size: 1.3rem;
       letter-spacing: 0.14em;
+      color: var(--text-dim);
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--green); }
+
+    /* Hamburger açıkken nav üzerinde kalması için */
+    .nav-hamburger {
+      z-index: 300;
     }
 
     /* — Hero — */
@@ -1056,8 +1072,6 @@
 
     /* — Formula — */
     .formula-wrap { padding: 60px 20px; }
-    .formula-eq { font-size: 0.7rem; }
-    .w-row { grid-template-columns: 90px 1fr 40px; gap: 10px; }
 
     /* — Crisis — */
     .crisis-inner { padding: 60px 20px; }
@@ -1067,16 +1081,15 @@
     .revenue-strip { padding: 28px 20px 0; }
 
     /* — ESG — */
-    .esg-banner { padding: 40px 20px; }
+    .esg-banner { padding: 40px 20px; flex-direction: column; align-items: flex-start; gap: 24px; }
     .esg-items { gap: 24px; flex-wrap: wrap; }
     .esg-num { font-size: 1.4rem; }
-    .esg-formula { font-size: 0.68rem; padding: 12px 16px; }
 
     /* — Team — */
     .team-inner { padding: 60px 20px; }
 
     /* — Footer — */
-    footer { padding: 28px 20px; }
+    footer { padding: 28px 20px; flex-direction: column; gap: 10px; text-align: center; }
     .footer-copy { display: none; }
   }
 </style>
@@ -1433,7 +1446,7 @@
         <div class="team-avatar">AKG</div>
         <div class="team-name">Alper Kaan Güler</div>
         <div class="team-role">Kurucu · Yapay Zekâ</div>
-        <div class="team-desc">Tahmin modelleri ve makine öğrenmesi uzmanlığıyla EnergynetAI'ın akıllı karar destek motorunun geliştirilmesinden sorumlu.</div>
+        <div class="team-desc">Tahmin modelleri ve makine öğrenmesi uzmanlığıyla EnergynetAI'ın akıllı karar motorunun geliştirilmesinden sorumlu.</div>
       </div>
     </div>
   </div>
@@ -1452,14 +1465,22 @@
   const navLinks  = document.getElementById('navLinks');
 
   hamburger.addEventListener('click', () => {
-    hamburger.classList.toggle('open');
-    navLinks.classList.toggle('open');
+    const isOpen = hamburger.classList.toggle('open');
+    navLinks.classList.toggle('open', isOpen);
+    // Menü açıkken sayfanın scroll'unu kilitle
+    document.body.style.overflow = isOpen ? 'hidden' : '';
   });
 
   function closeNav() {
     hamburger.classList.remove('open');
     navLinks.classList.remove('open');
+    document.body.style.overflow = '';
   }
+
+  // ESC tuşuyla kapat
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeNav();
+  });
 
   // Intersection Observer for fade-up
   const observer = new IntersectionObserver((entries) => {
