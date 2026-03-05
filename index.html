@@ -1148,24 +1148,24 @@
         </div>
 
         <div class="risk-bar-wrap">
-          <div class="risk-bar-label"><span>QoS Risk Skoru</span><span style="color:var(--green)">DÜŞÜK — 0.22</span></div>
+          <div class="risk-bar-label"><span>QoS Risk Skoru</span><span style="color:var(--green)">DÜŞÜK</span></div>
           <div class="risk-bar-track"><div class="risk-bar-fill fill-green"></div></div>
         </div>
         <div class="risk-bar-wrap">
-          <div class="risk-bar-label"><span>PRB Kullanımı</span><span style="color:var(--amber)">ORTA — 0.55</span></div>
+          <div class="risk-bar-label"><span>Ağ Yük Durumu</span><span style="color:var(--amber)">ORTA</span></div>
           <div class="risk-bar-track"><div class="risk-bar-fill fill-amber"></div></div>
         </div>
         <div class="risk-bar-wrap" style="margin-bottom:16px">
-          <div class="risk-bar-label"><span>Backhaul Doluluğu</span><span style="color:var(--red)">İZLENİYOR — 0.82</span></div>
+          <div class="risk-bar-label"><span>Bağlantı Kapasitesi</span><span style="color:var(--red)">İZLENİYOR</span></div>
           <div class="risk-bar-track"><div class="risk-bar-fill fill-red"></div></div>
         </div>
 
         <div class="event-log" id="eventLog">
-          <div class="log-line ok" style="animation-delay:0.1s"><span class="time">03:41</span> Carrier sleep aktive — Hücre #A12</div>
-          <div class="log-line action" style="animation-delay:0.5s"><span class="time">03:42</span> Power reduce uygulandı — Hücre #B07</div>
-          <div class="log-line ok" style="animation-delay:0.9s"><span class="time">03:43</span> QoS eşiği stabil — Rollback gerekmedi</div>
-          <div class="log-line action" style="animation-delay:1.3s"><span class="time">03:44</span> Backhaul yükü izleniyor — %82</div>
-          <div class="log-line ok" style="animation-delay:1.7s"><span class="time">03:45</span> Tahmin güncellendi — t+15 normal trafik</div>
+          <div class="log-line ok"     style="animation-delay:0.1s"><span class="time">03:41</span> Enerji optimizasyonu devreye alındı</div>
+          <div class="log-line action" style="animation-delay:0.5s"><span class="time">03:42</span> Ağ performansı izleniyor</div>
+          <div class="log-line ok"     style="animation-delay:0.9s"><span class="time">03:43</span> Hizmet kalitesi stabil — işlem tamamlandı</div>
+          <div class="log-line action" style="animation-delay:1.3s"><span class="time">03:44</span> Bağlantı kapasitesi kontrol ediliyor</div>
+          <div class="log-line ok"     style="animation-delay:1.7s"><span class="time">03:45</span> Tahmin modeli güncellendi</div>
         </div>
       </div>
     </div>
@@ -1183,12 +1183,12 @@
     <div class="stat-label">Statik ayarlara kıyasla<br>AI tasarruf oranı</div>
   </div>
   <div class="stat-item fade-up" style="transition-delay:0.2s">
-    <div class="stat-num">12–18</div>
-    <div class="stat-label">Ay ROI<br>geri dönüş süresi</div>
-  </div>
-  <div class="stat-item fade-up" style="transition-delay:0.3s">
     <div class="stat-num">800+</div>
     <div class="stat-label">Global hedef<br>mobil operatör</div>
+  </div>
+  <div class="stat-item fade-up" style="transition-delay:0.3s">
+    <div class="stat-num">5G+</div>
+    <div class="stat-label">Nesil altyapılara<br>hazır mimari</div>
   </div>
 </div>
 
@@ -1200,107 +1200,83 @@
   <div class="arch-grid">
     <div class="arch-card fade-up" data-num="01">
       <span class="arch-icon">📡</span>
-      <div class="arch-title">Veri Toplama Katmanı</div>
-      <div class="arch-desc">OSS/PM altyapısından hücre seviyesinde 5–15 dakikalık zaman çözünürlüğünde performans sayaçları alınır. Tüm veriler KVKK uyumlu, anonimleştirilmiş KPI'lardan oluşur.</div>
-      <span class="arch-tag">OSS · PM · Near-RT</span>
+      <div class="arch-title">Veri Toplama</div>
+      <div class="arch-desc">Operatör altyapısından hücre seviyesinde gerçek zamanlı performans verisi toplanır. Tüm veriler gizlilik standartlarına uygun, anonimleştirilmiş biçimde işlenir.</div>
+      <span class="arch-tag">Gerçek Zamanlı · Gizlilik Uyumlu</span>
     </div>
     <div class="arch-card fade-up" data-num="02" style="transition-delay:0.1s">
       <span class="arch-icon">🔮</span>
-      <div class="arch-title">Forecast Engine</div>
-      <div class="arch-desc">Holt-Winters + ARIMA/SARIMA + LightGBM/XGBoost algoritmaları ile t+15 ve t+30 dakika KPI tahminleri. RMSE, MAE, MAPE ile sürekli model doğrulaması.</div>
-      <span class="arch-tag">Time Series · ML</span>
+      <div class="arch-title">Tahmin Motoru</div>
+      <div class="arch-desc">Kısa vadeli ağ performans tahminleri üretilir. Geçmiş verilerle sürekli eğitilen modeller, gelecekteki ağ durumunu önceden görür.</div>
+      <span class="arch-tag">Kısa Vadeli · Adaptif</span>
     </div>
     <div class="arch-card fade-up" data-num="03" style="transition-delay:0.2s">
       <span class="arch-icon">⚖️</span>
-      <div class="arch-title">Risk Engine</div>
-      <div class="arch-desc">Drop, HO başarımı, SINR, PRB doluluğu ve Backhaul kapasitesi parametrelerinden çok boyutlu QoS Risk Skoru üretilir. Eşik aşımında aksiyon durdurulur.</div>
-      <span class="arch-tag">Multi-dim · Composite</span>
+      <div class="arch-title">Risk Motoru</div>
+      <div class="arch-desc">Çok boyutlu ağ parametreleri birlikte değerlendirilerek anlık bir risk skoru üretilir. Bu skor, enerji aksiyonunun güvenli olup olmadığını belirler.</div>
+      <span class="arch-tag">Çok Boyutlu · Akıllı</span>
     </div>
     <div class="arch-card fade-up" data-num="04">
       <span class="arch-icon">🎯</span>
-      <div class="arch-title">Policy Engine</div>
-      <div class="arch-desc">Risk skoruna göre kademeli aksiyonlar: güç azaltımı, taşıyıcı uyku modu, rollback veya kriz modu. What-if simülasyon ile aksiyon öncesi etki tahmini.</div>
-      <span class="arch-tag">RL · Constrained · RL</span>
+      <div class="arch-title">Karar Motoru</div>
+      <div class="arch-desc">Risk durumuna göre en uygun enerji aksiyonu seçilir. Her karar, uygulanmadan önce simülasyon ortamında test edilir.</div>
+      <span class="arch-tag">What-if · Güvenli</span>
     </div>
     <div class="arch-card fade-up" data-num="05" style="transition-delay:0.1s">
       <span class="arch-icon">🔄</span>
-      <div class="arch-title">Closed-Loop Kontrol</div>
-      <div class="arch-desc">Aksiyon sonrası ölçümler Forecast ve Risk Engine'e beslenir. Geri besleme mekanizması sayesinde sistem kendini sürekli kalibre eder ve adaptif öğrenme sağlar.</div>
-      <span class="arch-tag">Feedback · Adaptive</span>
+      <div class="arch-title">Kapalı Döngü Kontrol</div>
+      <div class="arch-desc">Alınan her aksiyonun sonucu izlenerek sisteme geri beslenir. Bu sayede model sürekli kendini iyileştirir ve koşullara uyum sağlar.</div>
+      <span class="arch-tag">Öz-Öğrenen · Sürekli</span>
     </div>
     <div class="arch-card fade-up" data-num="06" style="transition-delay:0.2s">
       <span class="arch-icon">🔌</span>
-      <div class="arch-title">SON/NMS Entegrasyonu</div>
-      <div class="arch-desc">Belirlenen aksiyonlar mevcut SON veya Network Management System üzerinden uygulanır. Vendor-agnostic API yapısı — ek donanım gerektirmez.</div>
-      <span class="arch-tag">Vendor-Agnostic · API</span>
+      <div class="arch-title">Ağ Entegrasyonu</div>
+      <div class="arch-desc">Kararlar mevcut ağ yönetim sistemleri üzerinden uygulanır. Ek donanım gerektirmez; farklı operatör altyapılarıyla uyumludur.</div>
+      <span class="arch-tag">Donanımsız · Evrensel</span>
     </div>
   </div>
 </section>
 
-<!-- FORMÜL -->
+<!-- NASIL ÇALIŞIR -->
 <section class="formula-section">
   <div class="formula-wrap">
     <div>
-      <div class="section-tag">// risk formülü</div>
-      <h2 class="section-title fade-up" style="margin-bottom:24px">QoS Risk <em>Skoru</em></h2>
+      <div class="section-tag">// nasıl çalışır</div>
+      <h2 class="section-title fade-up" style="margin-bottom:24px">Akıllı karar, <em>güvenli</em> tasarruf</h2>
       <p style="font-size:0.72rem; line-height:1.9; color:var(--text-dim); margin-bottom:28px">
-        Enerji aksiyonlarının güvenliğini değerlendirmek için beş boyutlu ağırlıklı kompozit skor.
-        Pilot verisiyle kalibre edilen ağırlıklar, kriz modunda Drop ve HO bileşenlerini otomatik artırır.
+        EnergynetAI, enerji kararlarını vermeden önce ağın anlık ve yakın gelecekteki durumunu
+        değerlendirir. Hizmet kalitesi riske girdiği anda sistem otomatik olarak müdahale eder.
       </p>
       <div class="formula-box">
-        <div class="formula-box-title">// risk_score formülasyonu</div>
-        <div class="formula-eq">
-          <span class="var">Risk_Score</span> <span class="op">=</span><br>
-          &nbsp;&nbsp;<span class="weight">w₁</span>·<span class="var">Drop_pred_norm</span><br>
-          &nbsp;<span class="op">+</span> <span class="weight">w₂</span>·<span class="op">(1 −</span> <span class="var">HO_success_pred_norm</span><span class="op">)</span><br>
-          &nbsp;<span class="op">+</span> <span class="weight">w₃</span>·<span class="var">PRB_util_pred_norm</span><br>
-          &nbsp;<span class="op">+</span> <span class="weight">w₄</span>·<span class="op">(1 −</span> <span class="var">SINR_pred_norm</span><span class="op">)</span><br>
-          &nbsp;<span class="op">+</span> <span class="weight">w₅</span>·<span class="var">Backhaul_util_norm</span>
+        <div class="formula-box-title">// karar akışı</div>
+        <div class="formula-eq" style="font-size:0.82rem; line-height:2.4">
+          <span class="op">1 ·</span> <span class="var">Veri topla</span><br>
+          <span class="op">2 ·</span> <span class="var">Ağ durumunu tahmin et</span><br>
+          <span class="op">3 ·</span> <span class="var">Risk değerlendir</span><br>
+          <span class="op">4 ·</span> <span class="var">Aksiyon simüle et</span><br>
+          <span class="op">5 ·</span> <span class="var">Güvenli ise uygula</span>
         </div>
         <div class="formula-note">
-          <strong style="color:var(--text)">Karar Kuralı:</strong><br>
-          Risk_Score <span style="color:var(--red)">&gt; τ</span> → Enerji aksiyonları durdurulur / rollback<br>
-          Risk_Score <span style="color:var(--green)">≤ τ</span> → Kademeli enerji aksiyonları uygulanır
+          Herhangi bir aşamada risk eşiği aşılırsa sistem aksiyonu durdurup
+          <span style="color:var(--green)">otomatik geri alma</span> mekanizmasını devreye sokar.
         </div>
       </div>
     </div>
 
     <div>
-      <div style="font-size:0.62rem; letter-spacing:0.14em; text-transform:uppercase; color:var(--text-dim); margin-bottom:24px">Parametre Ağırlıkları (Normal Mod)</div>
-      <div class="weight-bars">
-        <div class="w-row">
-          <div class="w-label">Drop Rate</div>
-          <div class="w-track"><div class="w-fill" style="width:80%"></div></div>
-          <div class="w-val">w₁=0.4</div>
+      <div style="font-size:0.62rem; letter-spacing:0.14em; text-transform:uppercase; color:var(--text-dim); margin-bottom:24px">Temel Özellikler</div>
+      <div style="display:flex; flex-direction:column; gap:16px;">
+        <div style="padding:18px 20px; border:1px solid var(--border); background:var(--card)">
+          <div style="font-family:'Syne',sans-serif; font-size:0.82rem; font-weight:700; margin-bottom:6px; color:var(--text)">Çok Boyutlu Risk Analizi</div>
+          <div style="font-size:0.67rem; line-height:1.7; color:var(--text-dim)">Enerji kararları yalnızca trafik yoğunluğuna değil, birden fazla ağ parametresine dayalı olarak verilir.</div>
         </div>
-        <div class="w-row">
-          <div class="w-label">HO Başarı</div>
-          <div class="w-track"><div class="w-fill" style="width:60%"></div></div>
-          <div class="w-val">w₂=0.3</div>
+        <div style="padding:18px 20px; border:1px solid var(--border); background:var(--card)">
+          <div style="font-family:'Syne',sans-serif; font-size:0.82rem; font-weight:700; margin-bottom:6px; color:var(--text)">What-if Simülasyonu</div>
+          <div style="font-size:0.67rem; line-height:1.7; color:var(--text-dim)">Her aksiyon uygulanmadan önce sanal ortamda test edilir; olası etkiler önceden hesaplanır.</div>
         </div>
-        <div class="w-row">
-          <div class="w-label">PRB Kullanım</div>
-          <div class="w-track"><div class="w-fill" style="width:30%"></div></div>
-          <div class="w-val">w₃=0.1</div>
-        </div>
-        <div class="w-row">
-          <div class="w-label">SINR</div>
-          <div class="w-track"><div class="w-fill" style="width:40%"></div></div>
-          <div class="w-val">w₄=0.1</div>
-        </div>
-        <div class="w-row">
-          <div class="w-label">Backhaul</div>
-          <div class="w-track"><div class="w-fill" style="width:40%"></div></div>
-          <div class="w-val">w₅=0.1</div>
-        </div>
-      </div>
-
-      <div style="margin-top:32px; padding:20px; border:1px solid rgba(255,69,69,0.2); background:rgba(255,69,69,0.03)">
-        <div style="font-size:0.6rem; letter-spacing:0.14em; text-transform:uppercase; color:var(--red); margin-bottom:12px">⚠ Kriz Modunda Ağırlık Artışı</div>
-        <div style="font-size:0.67rem; line-height:1.8; color:var(--text-dim)">
-          Drop Rate → <span style="color:var(--red)">w₁ = 0.5</span><br>
-          HO Başarı &nbsp;→ <span style="color:var(--red)">w₂ = 0.4</span><br>
-          Sistem daha korumacı karar alır
+        <div style="padding:18px 20px; border:1px solid var(--border); background:var(--card)">
+          <div style="font-family:'Syne',sans-serif; font-size:0.82rem; font-weight:700; margin-bottom:6px; color:var(--text)">Otomatik Geri Alma</div>
+          <div style="font-size:0.67rem; line-height:1.7; color:var(--text-dim)">Uygulama sonrası sürekli izleme yapılır; kalite bozulması tespit edilirse sistem otomatik düzelir.</div>
         </div>
       </div>
     </div>
@@ -1314,18 +1290,16 @@
       <div class="section-tag">// kriz modu</div>
       <h2 class="section-title fade-up">Afet anında <em>tam kapasite</em></h2>
       <p style="font-size:0.72rem; line-height:1.9; color:var(--text-dim); margin-bottom:36px">
-        Deprem gibi olağanüstü durumlarda sistem otomatik olarak enerji tasarrufu hedeflerini ikinci plana alır,
-        acil iletişim kapasitesini maksimize eder.
+        Deprem gibi olağanüstü durumlarda sistem otomatik olarak enerji tasarrufu hedeflerini
+        ikinci plana alır. Acil iletişim kapasitesi önceliklendirilir, şebeke maksimum güçte çalışır.
       </p>
 
       <div style="font-size:0.62rem; letter-spacing:0.14em; text-transform:uppercase; color:var(--text-dim); margin-bottom:16px">Aktivasyon Tetikleyicileri</div>
       <div class="crisis-triggers">
-        <div class="trigger-item"><span class="trigger-icon">📈</span> Trafik ortalamanın %80–120 üzerinde ani artış</div>
-        <div class="trigger-item"><span class="trigger-icon">📉</span> Drop rate eşik üstü artış</div>
-        <div class="trigger-item"><span class="trigger-icon">📡</span> SINR/RSRQ kritik kalite bozulması</div>
-        <div class="trigger-item"><span class="trigger-icon">🔗</span> Backhaul kapasite aşımı / link saturasyonu</div>
-        <div class="trigger-item"><span class="trigger-icon">🚨</span> Resmi afet sinyalleri (AFAD API)</div>
-        <div class="trigger-item"><span class="trigger-icon">🧑‍💻</span> Manuel operatör tetiklemesi</div>
+        <div class="trigger-item"><span class="trigger-icon">📈</span> Ani ve anormal trafik artışı</div>
+        <div class="trigger-item"><span class="trigger-icon">📉</span> Hizmet kalitesinde kritik düşüş</div>
+        <div class="trigger-item"><span class="trigger-icon">🚨</span> Resmi afet bildirimleri</div>
+        <div class="trigger-item"><span class="trigger-icon">🧑‍💻</span> Manuel operatör kararı</div>
       </div>
     </div>
 
@@ -1333,46 +1307,37 @@
       <div class="crisis-timeline">
         <div class="crisis-tl-header">
           <span class="dot"></span>
-          Deprem Senaryosu — Simülasyon
+          Kriz Modu — Aksiyon Akışı
         </div>
         <div class="tl-row">
-          <div class="tl-time">03:12</div>
-          <div class="tl-event">Deprem sinyali algılandı (AFAD API)</div>
+          <div class="tl-time">① </div>
+          <div class="tl-event">Anomali tespit edildi</div>
         </div>
         <div class="tl-row">
-          <div class="tl-time">03:13</div>
-          <div class="tl-event active">Trafik %95 arttı — aşım tespiti</div>
+          <div class="tl-time">② </div>
+          <div class="tl-event active">Risk eşiği aşıldı</div>
         </div>
         <div class="tl-row">
-          <div class="tl-time">03:14</div>
-          <div class="tl-event critical">QoS risk skoru kritik eşiği aştı</div>
+          <div class="tl-time">③ </div>
+          <div class="tl-event critical">KRİZ MODU AKTİVE</div>
         </div>
         <div class="tl-row">
-          <div class="tl-time">03:15</div>
-          <div class="tl-event critical">KRİZ MODU AKTİVE EDİLDİ</div>
+          <div class="tl-time">④ </div>
+          <div class="tl-event active">Tasarruf aksiyonları durduruldu</div>
         </div>
         <div class="tl-row">
-          <div class="tl-time">03:16</div>
-          <div class="tl-event active">Enerji tasarruf aksiyonları devre dışı</div>
-        </div>
-        <div class="tl-row">
-          <div class="tl-time">03:17</div>
-          <div class="tl-event active">Uyutulan taşıyıcılar yeniden aktive edildi</div>
-        </div>
-        <div class="tl-row">
-          <div class="tl-time">03:18</div>
-          <div class="tl-event safe">Acil çağrı kapasitesi güvence altına alındı ✓</div>
+          <div class="tl-time">⑤ </div>
+          <div class="tl-event safe">Maksimum kapasite güvence altında ✓</div>
         </div>
       </div>
 
       <div style="margin-top:20px; padding:20px 24px; border:1px solid var(--border); background:var(--card)">
-        <div style="font-size:0.6rem; letter-spacing:0.14em; text-transform:uppercase; color:var(--text-dim); margin-bottom:12px">Kriz Modu Aksiyonları</div>
+        <div style="font-size:0.6rem; letter-spacing:0.14em; text-transform:uppercase; color:var(--text-dim); margin-bottom:12px">Kriz Modunda Sistem</div>
         <div style="font-size:0.67rem; line-height:2; color:var(--text-dim)">
-          ✓ Tüm enerji tasarruf aksiyonları askıya alındı<br>
-          ✓ Güç seviyeleri maksimum güvenli limite çıkarıldı<br>
-          ✓ Acil çağrılar için kapasite rezervasyonu<br>
-          ✓ QoS guardrail eşikleri sıkılaştırıldı<br>
-          ✓ Gerçek zamanlı izleme + manuel müdahale imkânı
+          ✓ Tüm enerji tasarruf aksiyonları askıya alınır<br>
+          ✓ Şebeke maksimum kapasiteyle çalışır<br>
+          ✓ Acil iletişim önceliklendirilir<br>
+          ✓ Gerçek zamanlı izleme sürer
         </div>
       </div>
     </div>
@@ -1390,7 +1355,7 @@
         <div class="market-region">Türkiye · Pilot Pazar</div>
         <div class="market-title">Yerli Operatörler</div>
         <div class="market-desc">Turkcell, Vodafone TR, Türk Telekom — binlerce makro saha. Küçük tasarruf oranları bile milyonlarca kWh enerji azaltımı anlamına gelir.</div>
-        <div class="market-highlight">10.000 saha → yıllık 10–15 GWh tasarruf</div>
+        <div class="market-highlight">Büyük ölçekli enerji & karbon tasarrufu potansiyeli</div>
       </div>
       <div class="market-card fade-up" style="transition-delay:0.1s">
         <div class="market-region">Avrupa · Net-Zero</div>
@@ -1427,28 +1392,22 @@
 <div class="esg-banner">
   <div>
     <div style="font-size:0.6rem; letter-spacing:0.16em; text-transform:uppercase; color:var(--green); margin-bottom:8px">ESG · Sürdürülebilirlik</div>
-    <div style="font-family:'Syne',sans-serif; font-size:1.1rem; font-weight:700; margin-bottom:6px">Karbon Azaltım Hesaplama</div>
-    <div style="font-size:0.68rem; color:var(--text-dim)">Scope 2 emisyon metodolojisi · Türkiye şebeke emisyon faktörü</div>
+    <div style="font-family:'Syne',sans-serif; font-size:1.1rem; font-weight:700; margin-bottom:6px">Karbon Ayak İzini Azalt</div>
+    <div style="font-size:0.68rem; color:var(--text-dim)">Her enerji tasarrufu doğrudan karbon azaltımına dönüşür</div>
   </div>
   <div class="esg-items">
     <div class="esg-item">
-      <span class="esg-num">0.40–0.45</span>
-      <span class="esg-label">kgCO₂/kWh<br>Emisyon Faktörü</span>
+      <span class="esg-num">Net-Zero</span>
+      <span class="esg-label">Operatör hedeflerine<br>katkı</span>
     </div>
     <div class="esg-item">
-      <span class="esg-num">$1.5–3M</span>
-      <span class="esg-label">Yıllık OPEX<br>Azaltımı</span>
+      <span class="esg-num">ESG</span>
+      <span class="esg-label">Raporlama<br>uyumluluğu</span>
     </div>
     <div class="esg-item">
-      <span class="esg-num">%5–8</span>
-      <span class="esg-label">Kontrollü<br>Tasarruf Hedefi</span>
+      <span class="esg-num">Scope 2</span>
+      <span class="esg-label">Emisyon azaltım<br>metodolojisi</span>
     </div>
-  </div>
-  <div class="esg-formula">
-    CO₂_Reduction =<br>
-    <span>Energy_Saved (kWh)</span><br>
-    × Emission_Factor<br>
-    <span>(kgCO₂/kWh)</span>
   </div>
 </div>
 
@@ -1461,20 +1420,20 @@
       <div class="team-card fade-up">
         <div class="team-avatar">AO</div>
         <div class="team-name">Ali Orhan</div>
-        <div class="team-role">Proje Sahibi · Sistem Mimarı</div>
-        <div class="team-desc">Mobil şebeke enerji optimizasyonu ve yapay zekâ tabanlı karar sistemleri geliştirme alanında öncü mimari tasarım. RAN yönetim platformu konsept ve strateji liderliği.</div>
+        <div class="team-role">Kurucu · Sistem Mimarı</div>
+        <div class="team-desc">Mobil şebeke yönetimi ve yapay zekâ tabanlı karar sistemleri alanında deneyimli. EnergynetAI'ın genel mimarisi ve ürün stratejisinden sorumlu.</div>
       </div>
       <div class="team-card fade-up" style="transition-delay:0.1s">
         <div class="team-avatar">YD</div>
         <div class="team-name">Yakup Dolat</div>
-        <div class="team-role">Proje Sahibi · ML Mühendisi</div>
-        <div class="team-desc">Zaman serisi tahmin modelleri ve makine öğrenmesi algoritmaları geliştirme. Holt-Winters, ARIMA/SARIMA ve gradyan artırmalı ağaç yöntemleri uzmanlığı.</div>
+        <div class="team-role">Kurucu · Yapay Zekâ</div>
+        <div class="team-desc">Tahmin modelleri ve makine öğrenmesi uzmanlığıyla EnergynetAI'ın akıllı karar motorunun geliştirilmesinden sorumlu.</div>
       </div>
       <div class="team-card fade-up" style="transition-delay:0.2s">
         <div class="team-avatar">AKG</div>
         <div class="team-name">Alper Kaan Güler</div>
-        <div class="team-role">Proje Sahibi · Sistem Entegrasyonu</div>
-        <div class="team-desc">SON/OSS entegrasyonu, kapalı çevrim kontrol sistemleri ve pilot A/B test tasarımı. Reinforcement learning tabanlı enerji aksiyon optimizasyonu geliştirme.</div>
+        <div class="team-role">Kurucu · Sistem Entegrasyonu</div>
+        <div class="team-desc">Ağ sistemleri entegrasyonu ve kapalı döngü kontrol mimarileri alanında uzman. Operatör altyapılarına sorunsuz entegrasyondan sorumlu.</div>
       </div>
     </div>
   </div>
@@ -1514,11 +1473,11 @@
   // Animated log entries
   const log = document.getElementById('eventLog');
   const lines = [
-    { cls: 'ok', time: '03:46', msg: 'What-if analizi tamamlandı — Hücre #C03' },
-    { cls: 'action', time: '03:47', msg: 'Enerji tasarrufu aksiyonu güvenli — devreye alındı' },
-    { cls: 'ok', time: '03:48', msg: 'SINR stabil — tahmin doğrulandı' },
-    { cls: 'action', time: '03:49', msg: 'Model güncellendi — t+15 tahmin yapıldı' },
-    { cls: 'ok', time: '03:50', msg: 'Kümülatif tasarruf: 6.8 kWh bu saatte' },
+    { cls: 'ok',     time: '03:46', msg: 'Enerji optimizasyonu devam ediyor' },
+    { cls: 'action', time: '03:47', msg: 'Risk değerlendirmesi tamamlandı — aksiyon güvenli' },
+    { cls: 'ok',     time: '03:48', msg: 'Hizmet kalitesi stabil' },
+    { cls: 'action', time: '03:49', msg: 'Tahmin modeli güncellendi' },
+    { cls: 'ok',     time: '03:50', msg: 'Sistem normal çalışmada' },
   ];
 
   let i = 0;
